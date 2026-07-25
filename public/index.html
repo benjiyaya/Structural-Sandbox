@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Structural Architecture Simulator</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1 13 L5 5 L8 10 L11 3 L15 13 Z' fill='%232ecc71'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header id="topbar">
+    <h1>Structural Sandbox</h1>
+    <label class="topfield">
+      Preset
+      <select id="presetSelect">
+        <option value="">Load preset…</option>
+      </select>
+    </label>
+    <button id="runBtn" class="primary">Run Analysis</button>
+    <button id="resetViewBtn">Reset View</button>
+    <button id="clearBtn">Clear</button>
+    <button id="saveBtn">Save .json</button>
+    <button id="loadBtn">Load .json</button>
+    <input type="file" id="loadInput" accept=".json,application/json" hidden>
+  </header>
+
+  <div id="displaybar">
+    <span class="displaybar-title">Display</span>
+    <label><input type="checkbox" data-display="deflected" checked> Deflected shape</label>
+    <label><input type="checkbox" data-display="reactions" checked> Reactions</label>
+    <label><input type="checkbox" data-display="loads" checked> Loads</label>
+    <label><input type="checkbox" data-display="nodeIds" checked> Node ids</label>
+    <label><input type="checkbox" data-display="grid" checked> Grid</label>
+    <label><input type="checkbox" data-display="legend" checked> Legend</label>
+  </div>
+
+  <div id="main">
+    <aside id="toolbar">
+      <span class="tool-title">Mode</span>
+      <button data-mode="select" class="active">Select / Move</button>
+      <button data-mode="addNode">Add Node</button>
+      <button data-mode="addMember">Add Member</button>
+      <button data-mode="addSupport">Add Support</button>
+      <button data-mode="addWeight">Add Weight</button>
+      <button data-mode="delete">Delete</button>
+
+      <div class="tool-section">
+        <span class="tool-title">Member</span>
+        <label>Material
+          <select id="optMaterial">
+            <option value="steel" selected>Steel</option>
+            <option value="concrete">Concrete</option>
+            <option value="wood">Wood</option>
+          </select>
+        </label>
+        <label>Type
+          <select id="optType">
+            <option value="beam" selected>Beam</option>
+            <option value="column">Column</option>
+            <option value="cable">Cable</option>
+          </select>
+        </label>
+        <label>Section
+          <select id="optSection">
+            <option value="thin">Thin</option>
+            <option value="medium" selected>Medium</option>
+            <option value="thick">Thick</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="tool-section">
+        <span class="tool-title">Support</span>
+        <label>Type
+          <select id="optSupport">
+            <option value="fixed">Fixed</option>
+            <option value="pinned" selected>Pinned</option>
+            <option value="roller">Roller</option>
+          </select>
+        </label>
+      </div>
+    </aside>
+
+    <div id="canvasWrap">
+      <canvas id="canvas"></canvas>
+      <div id="hint"></div>
+      <div id="tooltip"></div>
+      <div id="legend">
+        <div class="legend-title">Utilization (demand / capacity)</div>
+        <div class="legend-bar">
+          <div class="legend-gradient"></div>
+          <div class="legend-ticks">
+            <span style="left:0%">0</span><span style="left:50%">0.50</span><span style="left:85%;transform:translateX(-100%)">0.85</span><span style="left:100%">1.00</span>
+          </div>
+        </div>
+        <div class="legend-note">≥ 1.00 = FAILED. Elastic stress ratios, not collapse loads.</div>
+        <div class="legend-scale">
+          <div id="scaleBarInner"></div>
+          <span id="scaleBarLabel">5 m</span>
+        </div>
+      </div>
+      <div id="zoomReadout">100% · 20.0 px/m</div>
+    </div>
+
+    <aside id="panel">
+      <div class="panel-section">
+        <span class="tool-title">Environment</span>
+        <label class="slider-label">Wind <span id="windValue" class="slider-value"></span></label>
+        <input type="range" id="windSlider" min="0" max="300" step="5" value="0">
+        <label>Direction
+          <select id="windDir">
+            <option value="ltr" selected>Left → Right</option>
+            <option value="rtl">Right → Left</option>
+          </select>
+        </label>
+        <label class="slider-label">Rain <span id="rainValue" class="slider-value"></span></label>
+        <input type="range" id="rainSlider" min="0" max="100" step="5" value="0">
+        <label class="slider-label">Weight mass <span id="weightValue" class="slider-value"></span></label>
+        <input type="range" id="weightSlider" min="10" max="5000" step="10" value="500">
+      </div>
+
+      <div class="panel-section">
+        <span class="tool-title">Results</span>
+        <div id="statusBanner" class="banner idle">—</div>
+        <div id="resultStats"></div>
+        <div id="failureList"></div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="js/physics/model.js"></script>
+  <script src="js/physics/loads.js"></script>
+  <script src="js/physics/solver.js"></script>
+  <script src="js/presets.js"></script>
+  <script src="js/project.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

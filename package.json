@@ -1,0 +1,30 @@
+{
+  "name": "structural-sandbox",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Educational 2D structural stress-testing sandbox (zero runtime dependencies)",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/run-tests.js",
+    "app": "electron .",
+    "dist": "electron-builder --win --dir"
+  },
+  "build": {
+    "appId": "com.benjiyaya.structuralsandbox",
+    "productName": "Structural Sandbox",
+    "files": [
+      "public/**",
+      "electron/**",
+      "package.json"
+    ],
+    "win": {
+      "target": "dir"
+    }
+  },
+  "devDependencies": {
+    "electron": "^43.2.0",
+    "electron-builder": "^26.15.3",
+    "playwright-core": "^1.62.0"
+  }
+}
