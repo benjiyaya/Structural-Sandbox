@@ -10,6 +10,9 @@ Everything is plain HTML/CSS/JavaScript with **zero dependencies** — no npm
 packages, no build step, no CDNs, no external network requests. It works
 fully offline.
 
+<img width="1582" height="936" alt="Screenshot 2026-07-31 232815" src="https://github.com/user-attachments/assets/c26d125d-7ee5-4c11-86eb-8f52ff528064" />
+
+
 ## Run
 
 Requires Node.js (any recent version; developed on v25).
